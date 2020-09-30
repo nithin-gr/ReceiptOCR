@@ -121,6 +121,22 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
         np.copyto(sharpened, image, where=low_contrast_mask)
     return sharpened
 
+def organization_name(text):
+    #taking the text on the first line 
+    #of the receipt as default organization name
+
+    split_text=text.lstrip(" ").split()
+    entity=0
+    name=''
+    while split_text[entity]:
+        if entity!=' ' and entity[-1]!='\n':
+            name+=entity
+
+    return name
+
+
+
+
 def fuzzy_date(text):
     for s in text.split():
         try:
@@ -132,7 +148,7 @@ def fuzzy_date(text):
     #     print(match)
 
 if __name__ == '__main__':
-    image = cv2.imread('receipt.jpg')
+    image = cv2.imread('F:/OCR/Receipt_Dataset/1007-receipt.jpg')
     final = warp_image(image)
     final = contrast_brightness(final)
     final = unsharp_mask(final)
